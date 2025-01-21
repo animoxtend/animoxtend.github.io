@@ -251,7 +251,6 @@ coverage
 docs/.vitepress/cache/**/*
 docs/.vitepress/dist/**/*
 # auto generated files
-pnpm-lock.yaml
 components.d.ts
 src/typing/components.d.ts
 .env

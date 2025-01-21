@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: ./插件用户手册%20V1.0.0/
+      link: ./cn/插件用户手册%20V1.0.0/
     # - theme: brand
     #   text: Get the Addon
     #   link: https://blendermarket.com/search?utf8=%E2%9C%93&search%5Bq%5D=animoxtend&search%5Bcategory_id%5D=&button=

@@ -1,110 +1,150 @@
 [
   {
-    "text": "插件用户手册 V1.0.0",
+    "text": "cn",
     "items": [
       {
-        "text": "index",
-        "link": "/插件用户手册 V1.0.0/"
-      },
-      {
-        "text": "1 - 简介",
-        "link": "/插件用户手册 V1.0.0/1 - 简介/"
-      },
-      {
-        "text": "2 - 安装指南",
-        "link": "/插件用户手册 V1.0.0/2 - 安装指南/"
-      },
-      {
-        "text": "3 - 使用教程",
+        "text": "插件用户手册 V1.0.0",
         "items": [
           {
             "text": "index",
-            "link": "/插件用户手册 V1.0.0/3 - 使用教程/"
+            "link": "/cn/插件用户手册 V1.0.0/"
           },
           {
-            "text": "3.1 - 3D 模型生成",
-            "link": "/插件用户手册 V1.0.0/3 - 使用教程/3.1 - 3D 模型生成.md"
+            "text": "1 - 简介",
+            "items": [
+              {
+                "text": "index",
+                "link": "/cn/插件用户手册 V1.0.0/1 - 简介/"
+              }
+            ],
+            "collapsed": false
           },
           {
-            "text": "3.2 - 模型处理与骨骼绑定",
-            "link": "/插件用户手册 V1.0.0/3 - 使用教程/3.2 - 模型处理与骨骼绑定.md"
+            "text": "2 - 安装指南",
+            "items": [
+              {
+                "text": "index",
+                "link": "/cn/插件用户手册 V1.0.0/2 - 安装指南/"
+              }
+            ],
+            "collapsed": false
           },
           {
-            "text": "3.3 - 动作检索与表情生成",
-            "link": "/插件用户手册 V1.0.0/3 - 使用教程/3.3 - 动作检索与表情生成.md"
+            "text": "3 - 使用教程",
+            "items": [
+              {
+                "text": "index",
+                "link": "/cn/插件用户手册 V1.0.0/3 - 使用教程/"
+              },
+              {
+                "text": "3.1 - 3D 模型生成",
+                "link": "/cn/插件用户手册 V1.0.0/3 - 使用教程/3.1 - 3D 模型生成.md"
+              },
+              {
+                "text": "3.2 - 模型处理与骨骼绑定",
+                "link": "/cn/插件用户手册 V1.0.0/3 - 使用教程/3.2 - 模型处理与骨骼绑定.md"
+              },
+              {
+                "text": "3.3 - 动作检索与表情生成",
+                "link": "/cn/插件用户手册 V1.0.0/3 - 使用教程/3.3 - 动作检索与表情生成.md"
+              },
+              {
+                "text": "3.4 - 动作重定向",
+                "link": "/cn/插件用户手册 V1.0.0/3 - 使用教程/3.4 - 动作重定向.md"
+              },
+              {
+                "text": "3.5 - 动作混合",
+                "link": "/cn/插件用户手册 V1.0.0/3 - 使用教程/3.5 - 动作混合.md"
+              }
+            ],
+            "collapsed": false
           },
           {
-            "text": "3.4 - 动作重定向",
-            "link": "/插件用户手册 V1.0.0/3 - 使用教程/3.4 - 动作重定向.md"
+            "text": "4 - AX_Create 模块",
+            "items": [
+              {
+                "text": "index",
+                "link": "/cn/插件用户手册 V1.0.0/4 - AX_Create 模块/"
+              },
+              {
+                "text": "4.1 - Management 子模块",
+                "link": "/cn/插件用户手册 V1.0.0/4 - AX_Create 模块/4.1 - Management 子模块.md"
+              },
+              {
+                "text": "4.2 - Generate 子模块",
+                "link": "/cn/插件用户手册 V1.0.0/4 - AX_Create 模块/4.2 - Generate 子模块.md"
+              },
+              {
+                "text": "4.3 - Post Process 子模块",
+                "link": "/cn/插件用户手册 V1.0.0/4 - AX_Create 模块/4.3 - Post Process 子模块.md"
+              }
+            ],
+            "collapsed": false
           },
           {
-            "text": "3.5 - 动作混合",
-            "link": "/插件用户手册 V1.0.0/3 - 使用教程/3.5 - 动作混合.md"
+            "text": "5 - AX_Animate 模块",
+            "items": [
+              {
+                "text": "index",
+                "link": "/cn/插件用户手册 V1.0.0/5 - AX_Animate 模块/"
+              },
+              {
+                "text": "5.1 - Generate 子模块",
+                "link": "/cn/插件用户手册 V1.0.0/5 - AX_Animate 模块/5.1 - Generate 子模块.md"
+              },
+              {
+                "text": "5.2 - Retarget 子模块",
+                "link": "/cn/插件用户手册 V1.0.0/5 - AX_Animate 模块/5.2 - Retarget 子模块.md"
+              },
+              {
+                "text": "5.3 - Smart Blend 子模块",
+                "link": "/cn/插件用户手册 V1.0.0/5 - AX_Animate 模块/5.3 - Smart Blend 子模块.md"
+              },
+              {
+                "text": "5.4 - Extension Tools 子模块",
+                "link": "/cn/插件用户手册 V1.0.0/5 - AX_Animate 模块/5.4 - Extension Tools 子模块.md"
+              }
+            ],
+            "collapsed": false
+          },
+          {
+            "text": "6 - 常见问题&解答",
+            "items": [
+              {
+                "text": "index",
+                "link": "/cn/插件用户手册 V1.0.0/6 - 常见问题&解答/"
+              }
+            ],
+            "collapsed": false
+          },
+          {
+            "text": "7 - 技术支持",
+            "items": [
+              {
+                "text": "index",
+                "link": "/cn/插件用户手册 V1.0.0/7 - 技术支持/"
+              }
+            ],
+            "collapsed": false
+          },
+          {
+            "text": "8 - 更新计划",
+            "items": [
+              {
+                "text": "index",
+                "link": "/cn/插件用户手册 V1.0.0/8 - 更新计划/"
+              }
+            ],
+            "collapsed": false
           }
         ],
         "collapsed": false
-      },
-      {
-        "text": "4 - AX_Create 模块",
-        "items": [
-          {
-            "text": "index",
-            "link": "/插件用户手册 V1.0.0/4 - AX_Create 模块/"
-          },
-          {
-            "text": "4.1 - Management 子模块",
-            "link": "/插件用户手册 V1.0.0/4 - AX_Create 模块/4.1 - Management 子模块.md"
-          },
-          {
-            "text": "4.2 - Generate 子模块",
-            "link": "/插件用户手册 V1.0.0/4 - AX_Create 模块/4.2 - Generate 子模块.md"
-          },
-          {
-            "text": "4.3 - Post Process 子模块",
-            "link": "/插件用户手册 V1.0.0/4 - AX_Create 模块/4.3 - Post Process 子模块.md"
-          }
-        ],
-        "collapsed": false
-      },
-      {
-        "text": "5 - AX_Animate 模块",
-        "items": [
-          {
-            "text": "index",
-            "link": "/插件用户手册 V1.0.0/5 - AX_Animate 模块/"
-          },
-          {
-            "text": "5.1 - Generate 子模块",
-            "link": "/插件用户手册 V1.0.0/5 - AX_Animate 模块/5.1 - Generate 子模块.md"
-          },
-          {
-            "text": "5.2 - Retarget 子模块",
-            "link": "/插件用户手册 V1.0.0/5 - AX_Animate 模块/5.2 - Retarget 子模块.md"
-          },
-          {
-            "text": "5.3 - Smart Blend 子模块",
-            "link": "/插件用户手册 V1.0.0/5 - AX_Animate 模块/5.3 - Smart Blend 子模块.md"
-          },
-          {
-            "text": "5.4 - Extension Tools 子模块",
-            "link": "/插件用户手册 V1.0.0/5 - AX_Animate 模块/5.4 - Extension Tools 子模块.md"
-          }
-        ],
-        "collapsed": false
-      },
-      {
-        "text": "6 - 常见问题&解答",
-        "link": "/插件用户手册 V1.0.0/6 - 常见问题&解答/"
-      },
-      {
-        "text": "7 - 技术支持",
-        "link": "/插件用户手册 V1.0.0/7 - 技术支持/"
-      },
-      {
-        "text": "8 - 更新计划",
-        "link": "/插件用户手册 V1.0.0/8 - 更新计划/"
       }
     ],
     "collapsed": false
+  },
+  {
+    "text": "_register",
+    "link": "/_register.md"
   }
 ]

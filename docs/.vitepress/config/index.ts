@@ -21,7 +21,7 @@ export default defineConfig({
     nav: [
       { text: '🏠 HOME', link: '/' },
       { text: '📚 插件用户手册', link: '/cn/插件用户手册 V1.0.0/' },
-      // { text: '✉️ 注册', link: '/_register/' },
+      { text: '✉️ 申请试用', link: '/_register' },
     ],
     sidebar: structure[0].items,
     socialLinks: [

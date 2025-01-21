@@ -16,5 +16,9 @@ export default {
   enhanceApp({ app, router, siteData }) {
     // ...
     app.component('demo-preview', NaiveUIContainer)
+    // 动态导入并注册全局组件
+    import('./components/RegisterForm.vue').then((module) => {
+      app.component('RegisterForm', module.default)
+    })
   },
 } satisfies Theme

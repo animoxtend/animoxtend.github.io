@@ -1,0 +1,45 @@
+[project]
+name = "AnimoXtend-Page"
+version = "0.2.7"
+description = "AnimoXtend Page"
+authors = [{ name = "YANG ZHITAO", email = "edwardyzt@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.11, <3.13"
+dynamic = ["dependencies"]
+license = { text = 'Apache License 2.0' }
+classifiers = [
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: Unix",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: Apache Software License",
+]
+keywords = ["animoxtend", "page"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+requires-poetry = ">=2.0,<3.0"
+package-mode = false
+packages = [{ include = "scripts", from = "." }]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+pypinyin = "^0.53.0"
+python-frontmatter = "^1.1.0"
+typer = "^0.15.1"
+pydantic = "^2.10.5"
+rich = "^13.9.4"
+pydantic-settings = "^2.7.1"
+gitpython = "^3.1.44"
+packaging = "^24.2"
+git-cliff = "^2.7.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.1"
+pre-commit = "^4.0.1"

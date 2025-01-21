@@ -1,0 +1,24 @@
+.vite
+.vscode
+.history
+.ruff_cache
+.husky
+node_modules
+# dist
+README.md
+
+# python build artifacts
+*.egg-info
+*.pyc
+
+.git
+.gitignore
+
+docker-compose.yml
+Dockerfile
+
+docs/.vitepress/dist
+docs/.vitepress/cache
+
+# auto generated
+src/typings/components.d.ts

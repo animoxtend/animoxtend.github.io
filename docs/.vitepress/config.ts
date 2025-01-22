@@ -1,62 +1,72 @@
+import { fileURLToPath } from 'node:url'
+
 import { defineConfig } from 'vitepress'
 import mathjax3 from 'markdown-it-mathjax3'
-import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
 
-import structure from '../structure.json'
-import constants from './constants.json'
+import { themeConfig } from './theme/themeConfig'
+import { docsConfig } from './docs'
+import { head } from './head'
+import { enConfig, zhConfig } from './configs'
 
-const customElements = ['mjx-container']
+import unocss from 'unocss/vite'
 
-const BASE_URL = '/docs/'
+// Element Plus components on demand import
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver, NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+
+const customElements: string[] = []
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: 'AnimoXtend',
-  description: 'AnimoXtend Documentation',
-  head: [['link', { rel: 'icon', href: `${BASE_URL}favicon.ico` }]],
-  lang: 'en-US',
-  themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    logo: '/icon.png',
-    nav: [
-      { text: '🏠 HOME', link: '/' },
-      { text: '📚 插件用户手册', link: '/插件用户手册 V1.0.0/' },
-    ],
-    sidebar: structure,
-    socialLinks: [
-      { icon: 'discord', link: constants.discordServer },
-      // { icon: 'github', link: constants.github },
-    ],
-    search: {
-      provider: 'local',
-      options: {
-        _render(src, env, md) {
-          const html = md.render(src, env)
-          if (env.frontmatter?.title) return md.render(`# ${env.frontmatter.title}`) + html
-          return html
-        },
-      },
+  /* Docs Config */
+  ...docsConfig,
+  /* Head Config */
+  head,
+  /* Theme Config */
+  themeConfig,
+  /* Locales Config */
+  locales: {
+    root: {
+      label: '简体中文',
+      lang: 'zh',
+      ...zhConfig,
     },
-    footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2019-present AnimoXtend',
+    en: {
+      label: 'English',
+      lang: 'en',
+      ...enConfig,
     },
   },
-  lastUpdated: true,
-  base: BASE_URL,
-  srcDir: '.',
   markdown: {
     math: true,
     config: (md) => {
       md.use(mathjax3)
-      md.use(containerPreview)
-      md.use(componentPreview)
     },
   },
   vue: {
     template: {
       compilerOptions: {
         isCustomElement: (tag) => customElements.includes(tag),
+      },
+    },
+  },
+  vite: {
+    plugins: [
+      unocss(),
+      // unplugin-auto-import
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
+      // unplugin-vue-components
+      Components({
+        dts: 'components.d.ts',
+        resolvers: [ElementPlusResolver(), NaiveUiResolver()],
+      }),
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./', import.meta.url)),
       },
     },
   },

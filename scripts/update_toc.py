@@ -27,12 +27,20 @@ DOCS_ROOT = ROOT / 'docs'
 class Settings(BaseSettings):
     indent_size: int = 2  # indent with 2 spaces
     includes: tuple[str, ...] = ('*.md',)
-    excludes: tuple[str, ...] = ('./index.md', './toc.md', './public/**')
-    structure_json_output: Path = DOCS_ROOT / 'structure.json'
-    toc_md_output: Path = DOCS_ROOT / '插件用户手册 V1.0.0' / 'index.md'
+    excludes: tuple[str, ...] = (
+        './index.md',
+        './toc.md',
+        './public/**',
+        '.vitepress/**',
+        './en/index.md',
+        './zh/index.md',
+        '**/_*.md',
+    )
+    structure_json_output: Path = DOCS_ROOT / '.vitepress' / 'structure.json'
+    toc_md_outputs: list[Path] = (DOCS_ROOT / 'zh' / '插件用户手册 V1.0.0' / 'index.md',)
     # TOC title
     toc_title: str = 'Table of Contents'
-    max_header_level: int = 2  # level higher than this will be formatted as list
+    max_header_level: int = 3  # level higher than this will be formatted as list
     min_level: int = 2  # level less than this will be ignored in TOC
 
 
@@ -43,8 +51,9 @@ def main():
     """Analyse the directory structure and generate `toc.md` and `structure.json`."""
     assert DOCS_ROOT.exists()
 
-    if not settings.toc_md_output.exists():
-        print(f'[bold yellow]Warning:[/bold yellow] {settings.toc_md_output} does not exist. Creating a new one...')
+    for path in settings.toc_md_outputs:
+        if not path.exists():
+            print(f'[bold yellow]Warning:[/bold yellow] {path} does not exist. Creating a new one...')
 
     # print(json.dumps(build_structure(root), indent=2, cls=MyJSONEncoder))
     root_info = build_from_root(DOCS_ROOT)
@@ -67,17 +76,18 @@ def main():
     print('\n'.join(toc_lines))
 
     lines = ['<!-- TOC -->', *toc_lines, '<!-- /TOC -->']
-    if settings.toc_md_output.exists():
-        old_lines = settings.toc_md_output.read_text(encoding='utf8').splitlines()
-        start, end = None, None
-        for i, line in enumerate(old_lines):
-            if line.strip().startswith('<!-- TOC -->'):
-                start = i
-            elif line.strip().startswith('<!-- /TOC -->'):
-                end = i
-        if start is not None and end is not None:
-            lines = old_lines[: start + 1] + toc_lines + old_lines[end:]
-    settings.toc_md_output.write_text('\n'.join(lines), encoding='utf8', newline='\n')
+    for path in settings.toc_md_outputs:
+        if path.exists():
+            old_lines = path.read_text(encoding='utf8').splitlines()
+            start, end = None, None
+            for i, line in enumerate(old_lines):
+                if line.strip().startswith('<!-- TOC -->'):
+                    start = i
+                elif line.strip().startswith('<!-- /TOC -->'):
+                    end = i
+            if start is not None and end is not None:
+                lines = old_lines[: start + 1] + toc_lines + old_lines[end:]
+        path.write_text('\n'.join(lines), encoding='utf8', newline='\n')
     print('[bold green]Done![/bold green]')
 
     for x in root_info.items:

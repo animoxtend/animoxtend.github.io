@@ -252,5 +252,5 @@ docs/.vitepress/cache/**/*
 docs/.vitepress/dist/**/*
 # auto generated files
 components.d.ts
-src/typing/components.d.ts
+docs/components.d.ts
 .env

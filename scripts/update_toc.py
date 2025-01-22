@@ -27,9 +27,17 @@ DOCS_ROOT = ROOT / 'docs'
 class Settings(BaseSettings):
     indent_size: int = 2  # indent with 2 spaces
     includes: tuple[str, ...] = ('*.md',)
-    excludes: tuple[str, ...] = ('./index.md', './toc.md', './public/**')
-    structure_json_output: Path = DOCS_ROOT / 'structure.json'
-    toc_md_outputs: list[Path] = (DOCS_ROOT / 'cn' / '插件用户手册 V1.0.0' / 'index.md',)
+    excludes: tuple[str, ...] = (
+        './index.md',
+        './toc.md',
+        './public/**',
+        '.vitepress/**',
+        './en/index.md',
+        './zh/index.md',
+        '**/_*.md',
+    )
+    structure_json_output: Path = DOCS_ROOT / '.vitepress' / 'structure.json'
+    toc_md_outputs: list[Path] = (DOCS_ROOT / 'zh' / '插件用户手册 V1.0.0' / 'index.md',)
     # TOC title
     toc_title: str = 'Table of Contents'
     max_header_level: int = 3  # level higher than this will be formatted as list

@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: https://carnelian-iberis-b26.notion.site/AnimoXtend-User-Manual-V1-0-0-17d18220da0f8071ac94e3c3664bc490
+      link: ./_get-started.md
     # - theme: brand
     #   text: Markdown Examples
     #   link: /markdown-examples

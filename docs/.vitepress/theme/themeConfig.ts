@@ -14,6 +14,7 @@ export const themeConfig: DefaultThemeType.Config = {
   },
   nav: getNav(),
   i18nRouting: false,
+  /*
   // Search Config
   search: {
     provider: 'local',
@@ -56,4 +57,5 @@ export const themeConfig: DefaultThemeType.Config = {
       },
     },
   },
+  */
 }

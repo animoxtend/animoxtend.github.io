@@ -9,7 +9,8 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: ./zh/插件用户手册%20V1.0.0/
+      link: https://enormous-voice-30d.notion.site/V1-0-0-175ec1cf5e3e809da7a4e42508a6867b
+      # link: ./zh/插件用户手册%20V1.0.0/
     # - theme: brand
     #   text: Markdown示例
     #   link: /markdown-examples

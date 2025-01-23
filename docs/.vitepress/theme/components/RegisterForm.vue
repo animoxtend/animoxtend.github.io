@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import axios from 'axios'
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
+
+import '../styles/bulma-inside.scss'
+
+import { formValue, validatorPromptsI18n, validators, isFormValueValid, refreshPrompts } from './validators'
+import type { FormValueKey } from './validators'
 
 type Locale = 'zh' | 'en'
 interface Props {
@@ -14,67 +19,25 @@ const props = withDefaults(defineProps<Props>(), {
 const formLocale = computed<Locale>(() => props.locale)
 const submitted = useLocalStorage('register-submitted', false)
 
-const formRef = ref()
-const formValue = ref({
-  whereYouHear: '',
-  whereYouHearOther: '',
-  industry: '',
-  industryOther: '',
-  profession: '',
-  professionOther: '',
-  email: '',
-  nickname: '',
-})
-const formRules = computed(() => {
-  const rules = {
-    whereYouHear: {
-      required: true,
-      message_cn: '请选择',
-      message: 'Please select',
-      trigger: 'change',
-    },
-    industry: {
-      required: true,
-      message_cn: '请输入',
-      message: 'Please input',
-      trigger: 'blur',
-    },
-    profession: {
-      required: true,
-      message_cn: '请输入',
-      message: 'Please input',
-      trigger: 'blur',
-    },
-    nickname: {
-      required: true,
-      message_cn: '请输入',
-      message: 'Please input',
-      trigger: 'blur',
-    },
-    email: {
-      required: true,
-      message_cn: '请输入邮箱',
-      message: 'Please input your email',
-      trigger: 'blur',
-    },
-  }
+const validatorPrompts = computed(() => {
   if (formLocale.value === 'zh') {
-    for (const v of Object.values(rules)) {
-      v.message = (v.message_cn || v.message) ?? ''
-    }
+    return validatorPromptsI18n.value.promptsZh
   }
-  return rules
+  return validatorPromptsI18n.value.promptsEn
 })
 
-type KeyOfForm = 'whereYouHear' | 'whereYouHearOther' | 'industry' | 'industryOther' | 'profession' | 'professionOther' | 'nickname' | 'email' | 'submit'
-type FormItems = Record<KeyOfForm, {
-  label?: string
-  label_cn?: string
-  label_en?: string
-  path?: string
-  required?: boolean
-  [key: string]: any
-}>
+type FormItemKey = FormValueKey | 'submit'
+type FormItems = Record<
+  FormItemKey,
+  {
+    label?: string
+    label_cn?: string
+    label_en?: string
+    path?: string
+    required?: boolean
+    [key: string]: any
+  }
+>
 const formItems = computed<FormItems>(() => {
   const items: FormItems = {
     whereYouHear: {
@@ -111,6 +74,18 @@ const formItems = computed<FormItems>(() => {
       label_cn: '其他职业 (请输入)',
       label: 'Other Profession (Please Input)',
       path: 'professionOther',
+      required: false,
+    },
+    toolsYouUse: {
+      label_cn: '您常用的工具',
+      label: 'Tools You Often Use',
+      path: 'toolsYouUse',
+      required: true,
+    },
+    toolsYouUseOther: {
+      label_cn: '其他工具 (请输入)',
+      label: 'Other Tools (Please Input)',
+      path: 'toolsYouUseOther',
       required: false,
     },
     nickname: {
@@ -332,7 +307,10 @@ const occupationOptions = computed(() => {
   return options
 })
 
-const emailValidation = computed(() => {
+const emailValidation = computed<{
+  status: 'error' | 'warning' | 'success'
+  message: string
+}>(() => {
   const value = formValue.value.email
   const isZh = formLocale.value === 'zh'
   if (!value) {
@@ -342,7 +320,7 @@ const emailValidation = computed(() => {
     }
   }
   // Check if the email is valid
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailRegex.test(value)) {
     return {
       status: 'warning',
@@ -356,119 +334,269 @@ const emailValidation = computed(() => {
   }
 })
 
-const handleValidateClick = async () => {
-  if (await formRef.value?.validate()) {
-    console.log('success')
-  }
-  axios.post('https://animoxtend.yangzhitao.top/api/apply/', {
-    whereYouHear: formValue.value.whereYouHear,
-    whereYouHearOther: formValue.value.whereYouHearOther,
-    industry: formValue.value.industry,
-    industryOther: formValue.value.industryOther,
-    profession: formValue.value.profession,
-    professionOther: formValue.value.professionOther,
-    email: formValue.value.email,
-    nickname: formValue.value.nickname,
-    locale: formLocale.value,
-  })
-  .then((resp) => {
-    const isZh = formLocale.value === 'zh'
-    if (resp.data.code === 200) {
-      alert(isZh ? '感谢您的支持' : 'Thank you for your support')
-      submitted.value = true
-    } else {
-      alert(isZh ? '提交失败' : 'failed')
+const onWhereYouHearChange = async (event) => {
+  if (event.target.checked) {
+    formValue.value.whereYouHear = event.target.value
+    if (event.target.value !== 'other') {
+      formValue.value.whereYouHearOther = ''
     }
-  })
+    await nextTick(() => validators.whereYouHear())
+  }
+  console.debug('??? whereYouHear', event.target.value, event.target.checked)
+}
+const onWhereYouHearOtherChange = async (event) => {
+  formValue.value.whereYouHearOther = event.target.value
+  await nextTick(() => validators.whereYouHearOther())
+  console.debug('??? whereYouHearOther', event.target.value, event.target.checked)
+}
+const onIndustryChange = async (event) => {
+  formValue.value.industry = event.target.value
+  await nextTick(() => validators.industry())
+  formValue.value.industryOther = ''
+  console.debug('??? industry', event.target.value, event.target.checked)
+}
+const onIndustryOtherChange = async (event) => {
+  formValue.value.industryOther = event.target.value
+  await nextTick(() => validators.industryOther())
+  console.debug('??? industryOther', event.target.value, event.target.checked)
+}
+const onProfessionChange = async (event) => {
+  formValue.value.profession = event.target.value
+  if (event.target.value !== 'other') {
+    formValue.value.professionOther = ''
+  }
+  await nextTick(() => validators.profession())
+  console.debug('??? profession', event.target.value, event.target.checked)
+}
+const onProfessionOtherChange = async (event) => {
+  formValue.value.professionOther = event.target.value
+  await nextTick(() => validators.professionOther())
+  console.debug('??? professionOther', event.target.value, event.target.checked)
+}
+const onNicknameChange = async (event) => {
+  formValue.value.nickname = event.target.value
+  await nextTick(() => validators.nickname())
+  console.debug('??? nickname', event.target.value, event.target.checked)
+}
+const onEmailChange = async (event) => {
+  formValue.value.email = event.target.value
+  await nextTick(() => validators.email())
+  console.debug('??? email', event.target.value, event.target.checked)
+}
+
+const handleValidateClick = async () => {
+  refreshPrompts()
+  await nextTick()
+  if (!isFormValueValid.value) {
+    if (formLocale.value === 'zh') {
+      alert('请完整填写表单')
+    } else {
+      alert('Please fill in the form correctly')
+    }
+    return
+  }
+  axios
+    .post('https://yangzhitao.top/animoxtend/api/apply/', {
+      whereYouHear: formValue.value.whereYouHear,
+      whereYouHearOther: formValue.value.whereYouHearOther,
+      industry: formValue.value.industry,
+      industryOther: formValue.value.industryOther,
+      profession: formValue.value.profession,
+      professionOther: formValue.value.professionOther,
+      email: formValue.value.email,
+      nickname: formValue.value.nickname,
+      locale: formLocale.value,
+    })
+    .then((resp) => {
+      const isZh = formLocale.value === 'zh'
+      if (resp.data.code === 200) {
+        alert(isZh ? '感谢您的支持' : 'Thank you for your support')
+        submitted.value = true
+      } else {
+        alert(isZh ? '提交失败' : 'failed')
+      }
+    })
 }
 </script>
 
 <template>
-  <div style="margin-top: 20px">
-    <div v-if="submitted" style="margin: 10px 0">
-      <n-text v-if="formLocale === 'zh'">
-        感谢您的支持！<br />
-        我们已收到您的申请，将尽快通过邮箱与您联系！
-      </n-text>
-      <n-text v-else>
-        Thank you for your support!<br />
-        We have received your application, and will contact you by email as soon as possible!
-      </n-text>
+  <div>
+    <div class="blm-content" style="margin-top: 20px">
+      <div v-if="submitted" style="margin: 10px 0">
+        <p v-if="formLocale === 'zh'">
+          感谢您的支持！<br />
+          我们已收到您的申请，将尽快通过邮箱与您联系！
+        </p>
+        <p v-else>
+          Thank you for your support!<br />
+          We have received your application, and will contact you by email as soon as possible!
+        </p>
+      </div>
+
+      <!-- FORM -->
+      <div class="blm-content" v-if="!submitted">
+        <h1 class="blm-h1">
+          <span v-if="formLocale === 'zh'">申请试用</span>
+          <span v-else>Apply for a Trial</span>
+        </h1>
+        <!-- 1. Where You Hear -->
+        <div class="blm-field">
+          <label class="blm-label">{{ formItems.whereYouHear.label }}</label>
+          <div class="blm-control">
+            <label
+              v-for="option in whereYouHearOptions"
+              class="blm-radio"
+              style="padding-right: 10px"
+            >
+              <input
+                type="radio"
+                v-model="formValue.whereYouHear"
+                :id="formItems.whereYouHear.path + option.value"
+                :value="option.value"
+                @change="onWhereYouHearChange"
+              />
+              {{ option.label }}
+            </label>
+            <span class="blm-help blm-is-danger" v-if="!!validatorPrompts.whereYouHear">
+              {{ validatorPrompts.whereYouHear }}
+            </span>
+          </div>
+        </div>
+        <div v-if="formValue.whereYouHear === 'other'" class="blm-field">
+          <label class="blm-label" for="whereYouHearOther">
+            {{ formItems.whereYouHearOther.label }}
+          </label>
+          <div class="blm-control">
+            <input
+              type="text"
+              v-model="formValue.whereYouHearOther"
+              class="blm-input"
+              :id="formItems.whereYouHearOther.path"
+              @blur="onWhereYouHearOtherChange"
+            />
+            <span class="blm-help blm-is-danger" v-if="!!validatorPrompts.whereYouHearOther">
+              {{ validatorPrompts.whereYouHearOther }}
+            </span>
+          </div>
+        </div>
+
+        <!-- 2. Industry -->
+        <div class="blm-field">
+          <label class="blm-label">{{ formItems.industry.label }}</label>
+          <div class="blm-control">
+            <div class="blm-select">
+              <select v-model="formValue.industry" class="w-250" @change="onIndustryChange">
+                <option v-for="option in industryOptions" :value="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+            <span class="blm-help blm-is-danger" v-if="!!validatorPrompts.industry">
+              {{ validatorPrompts.industry }}
+            </span>
+          </div>
+        </div>
+        <div v-if="formValue.industry === 'other'" class="blm-field">
+          <label class="blm-label" for="industryOther">{{ formItems.industryOther.label }}</label>
+          <div class="blm-control">
+            <input
+              type="text"
+              v-model="formValue.industryOther"
+              class="blm-input"
+              :id="formItems.industryOther.path"
+              @blur="onIndustryOtherChange"
+            />
+            <span class="blm-help blm-is-danger" v-if="!!validatorPrompts.industryOther">
+              {{ validatorPrompts.industryOther }}
+            </span>
+          </div>
+        </div>
+
+        <!-- 3. Profession -->
+        <div class="blm-field">
+          <label class="blm-label">{{ formItems.profession.label }}</label>
+          <div class="blm-control">
+            <div class="blm-select">
+              <select v-model="formValue.profession" class="w-250" @change="onProfessionChange">
+                <option v-for="option in occupationOptions" :value="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+            <span class="blm-help blm-is-danger" v-if="!!validatorPrompts.profession">
+              {{ validatorPrompts.profession }}
+            </span>
+          </div>
+        </div>
+        <div v-if="formValue.profession === 'other'" class="blm-field">
+          <label class="blm-label" for="professionOther">{{
+            formItems.professionOther.label
+          }}</label>
+          <div class="blm-control">
+            <input
+              type="text"
+              v-model="formValue.professionOther"
+              class="blm-input"
+              :id="formItems.professionOther.path"
+              @blur="onProfessionOtherChange"
+            />
+            <span class="blm-help blm-is-danger" v-if="!!validatorPrompts.professionOther">
+              {{ validatorPrompts.professionOther }}
+            </span>
+          </div>
+        </div>
+
+        <!-- 4. Nickname -->
+        <div class="blm-field">
+          <label class="blm-label">{{ formItems.nickname.label }}</label>
+          <div class="blm-control">
+            <input
+              type="text"
+              v-model="formValue.nickname"
+              class="blm-input"
+              :id="formItems.nickname.path"
+              @blur="onNicknameChange"
+            />
+            <span class="blm-icon is-small is-left">
+              <i class="blm-fas blm-fa-user"></i>
+            </span>
+            <span class="blm-help blm-is-danger" v-if="!!validatorPrompts.nickname">
+              {{ validatorPrompts.nickname }}
+            </span>
+          </div>
+        </div>
+
+        <!-- 5. Email -->
+        <div class="blm-field">
+          <label class="blm-label">{{ formItems.email.label }}</label>
+          <div class="blm-control">
+            <input
+              type="text"
+              v-model="formValue.email"
+              class="blm-input"
+              :id="formItems.email.path"
+              @blur="onEmailChange"
+            />
+            <span class="blm-icon blm-is-small blm-is-left">
+              <i class="blm-fas blm-fa-envelope"></i>
+            </span>
+            <span class="blm-help blm-is-danger" v-if="!!validatorPrompts.email">
+              {{ validatorPrompts.email }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button class="blm-button blm-is-info w-250" @click="handleValidateClick">
+          {{ formItems.submit.label }}
+        </button>
+      </div>
     </div>
-    <n-divider v-if="submitted" style="margin: 10px 0" />
-
-    <n-form
-      ref="formRef"
-      :label-width="80"
-      :model="formValue"
-      :rules="formRules"
-      style="max-width: 640px"
-      :disabled="submitted"
-    >
-      <!-- 1. Where You Hear -->
-      <n-form-item :label="formItems.whereYouHear.label" :path="formItems.whereYouHear.path" :required="formItems.whereYouHear.required" >
-        <n-radio-group v-model:value="formValue.whereYouHear" name="whereYouHear">
-          <n-radio v-for="option in whereYouHearOptions" :key="option.value" :value="option.value">
-            {{ option.label }}
-          </n-radio>
-        </n-radio-group>
-      </n-form-item>
-      <n-form-item :label="formItems.whereYouHearOther.label" :path="formItems.whereYouHearOther.path"
-        :required="formValue.whereYouHear === 'other'"
-      >
-        <n-input v-model:value="formValue.whereYouHearOther" :disabled="formValue.whereYouHear !== 'other'" placeholder="" maxlength="32" />
-      </n-form-item>
-
-      <!-- 2. Industry -->
-      <n-form-item :label="formItems.industry.label" :path="formItems.industry.path" :required="formItems.industry.required">
-        <n-select v-model:value="formValue.industry" :options="industryOptions" />
-      </n-form-item>
-
-      <n-form-item :label="formItems.industryOther.label" :path="formItems.industryOther.path"
-        :required="formValue.industry === 'other'"
-      >
-        <n-input v-model:value="formValue.industryOther" :disabled="formValue.industry !== 'other'" placeholder="" maxlength="32" />
-      </n-form-item>
-
-      <!-- 3. Profession -->
-      <n-form-item :label="formItems.profession.label" :path="formItems.profession.path" :required="formItems.profession.required">
-        <n-select v-model:value="formValue.profession" :options="occupationOptions" />
-      </n-form-item>
-
-      <n-form-item :label="formItems.professionOther.label" :path="formItems.professionOther.path"
-        :required="formValue.profession === 'other'"
-      >
-        <n-input v-model:value="formValue.professionOther" placeholder="" :disabled="formValue.profession !== 'other'" maxlength="32"/>
-      </n-form-item>
-
-      <!-- 4. Nickname -->
-      <n-form-item :label="formItems.nickname.label" :path="formItems.nickname.path" :required="formItems.nickname.required">
-        <n-input v-model:value="formValue.nickname" placeholder="" maxlength="32" />
-      </n-form-item>
-
-      <!-- 5. Email -->
-      <n-form-item
-        :label="formItems.email.label"
-        :path="formItems.email.path"
-        :validation-status="emailValidation.status"
-        :feedback="emailValidation.message"
-        :required="formItems.email.required"
-      >
-        <n-input
-          v-model:value="formValue.email"
-          placeholder=""
-          maxlength="64"
-        />
-      </n-form-item>
-    </n-form>
-
-    <!-- Submit Button -->
-    <n-button attr-type="button" type="info" @click="handleValidateClick" style="width: 150px; margin-bottom: 20px" :disabled="submitted">
-      {{ formItems.submit.label }}
-    </n-button>
   </div>
 </template>
 
-<style scoped>
-
+<style scoped lang="scss">
+.w-250 {
+  width: 250px;
+}
 </style>

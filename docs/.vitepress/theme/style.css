@@ -128,13 +128,3 @@
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
-
-.red {
-  color: red;
-}
-.orange {
-  color: orange;
-}
-.purple {
-  color: purple;
-}

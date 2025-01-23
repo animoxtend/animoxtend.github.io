@@ -8,13 +8,7 @@ import { docsConfig } from './docs'
 import { head } from './head'
 import { enConfig, zhConfig } from './configs'
 
-import unocss from 'unocss/vite'
-
-// Element Plus components on demand import
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver, NaiveUiResolver } from 'unplugin-vue-components/resolvers'
-
+const fileAndStyles: Record<string, string> = {}
 const customElements: string[] = []
 
 // https://vitepress.dev/reference/site-config
@@ -52,22 +46,27 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [
-      unocss(),
-      // unplugin-auto-import
-      AutoImport({
-        resolvers: [ElementPlusResolver()],
-      }),
-      // unplugin-vue-components
-      Components({
-        dts: 'components.d.ts',
-        resolvers: [ElementPlusResolver(), NaiveUiResolver()],
-      }),
-    ],
-    resolve: {
-      alias: {
-        '@': fileURLToPath(new URL('./', import.meta.url)),
-      },
+    ssr: {
+      noExternal: ['naive-ui', 'date-fns', 'vueuc'],
+    },
+    postRender(context) {
+      const styleRegex = /<css-render-style>((.|\s)+)<\/css-render-style>/
+      const vitepressPathRegex = /<vitepress-path>(.+)<\/vitepress-path>/
+      const style = styleRegex.exec(context.content)?.[1]
+      const vitepressPath = vitepressPathRegex.exec(context.content)?.[1]
+      if (vitepressPath && style) {
+        fileAndStyles[vitepressPath] = style
+      }
+      context.content = context.content.replace(styleRegex, '')
+      context.content = context.content.replace(vitepressPathRegex, '')
+    },
+    transformHtml(code, id) {
+      const html = id.split('/').pop()
+      if (!html) return
+      const style = fileAndStyles[`/${html}`]
+      if (style) {
+        return code.replace(/<\/head>/, `${style}</head>`)
+      }
     },
   },
 })

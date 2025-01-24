@@ -1,5 +1,5 @@
 export default {
-  base_url: '/docs/',
+  base_url: '/',
   socialLinks: {
     discordServer: 'https://discord.gg/AgWaF6w4RE',
     github: 'https://github.com/animoxtend',

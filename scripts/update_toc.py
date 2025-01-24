@@ -34,10 +34,12 @@ class Settings(BaseSettings):
         '.vitepress/**',
         './en/index.md',
         './zh/index.md',
+        './en/docs.md',
+        './zh/docs.md',
         '**/_*.md',
     )
     structure_json_output: Path = DOCS_ROOT / '.vitepress' / 'structure.json'
-    toc_md_outputs: list[Path] = (DOCS_ROOT / 'zh' / '插件用户手册 V1.0.0' / 'index.md',)
+    toc_md_outputs: tuple[Path, ...] = (DOCS_ROOT / 'zh' / '插件用户手册 V1.0.0' / 'index.md',)
     # TOC title
     toc_title: str = 'Table of Contents'
     max_header_level: int = 3  # level higher than this will be formatted as list

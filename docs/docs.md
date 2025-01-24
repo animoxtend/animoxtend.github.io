@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: ./_get-started
+      link: ./zh/_get-started
       # link: ./zh/插件用户手册%20V1.0.0/
     # - theme: brand
     #   text: Markdown示例

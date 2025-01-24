@@ -1,5 +1,9 @@
 [
   {
+    "text": "docs",
+    "link": "/docs.md"
+  },
+  {
     "text": "en",
     "items": [
       {
@@ -12,10 +16,6 @@
   {
     "text": "zh",
     "items": [
-      {
-        "text": "docs",
-        "link": "/zh/docs.md"
-      },
       {
         "text": "插件用户手册 V1.0.0",
         "items": [

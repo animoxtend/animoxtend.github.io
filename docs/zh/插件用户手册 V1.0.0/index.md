@@ -17,8 +17,6 @@ Discord 频道：<https://discord.gg/AgWaF6w4RE>
 <!-- TOC -->
 ### [docs](/en/docs.md)
 
-### [docs](/zh/docs.md)
-
 ### 插件用户手册 V1.0.0
 
 * [index](/zh/%E6%8F%92%E4%BB%B6%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C%20V1.0.0/)

@@ -1,7 +1,21 @@
 [
   {
+    "text": "en",
+    "items": [
+      {
+        "text": "docs",
+        "link": "/en/docs.md"
+      }
+    ],
+    "collapsed": false
+  },
+  {
     "text": "zh",
     "items": [
+      {
+        "text": "docs",
+        "link": "/zh/docs.md"
+      },
       {
         "text": "插件用户手册 V1.0.0",
         "items": [

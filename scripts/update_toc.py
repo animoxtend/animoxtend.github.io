@@ -34,8 +34,6 @@ class Settings(BaseSettings):
         '.vitepress/**',
         './en/index.md',
         './zh/index.md',
-        './en/docs.md',
-        './zh/docs.md',
         '**/_*.md',
     )
     structure_json_output: Path = DOCS_ROOT / '.vitepress' / 'structure.json'

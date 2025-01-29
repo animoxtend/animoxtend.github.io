@@ -8,7 +8,6 @@ import { defineComponent, h, inject, onMounted, watch, nextTick } from 'vue'
 import './style.css'
 import './styles/custom.scss'
 // plugins
-import busuanzi from 'busuanzi.pure.js' // 不蒜子
 import { NProgress } from 'nprogress-v2/dist/index.js' // 进度条组件
 import 'nprogress-v2/dist/index.css' // 进度条样式
 import mediumZoom from 'medium-zoom'
@@ -89,16 +88,23 @@ export default {
     import('./components/RegisterForm.vue').then((module) => {
       app.component('RegisterForm', module.default)
     })
-    import('./components/bsz.vue').then((module) => {
-      app.component('bsz', module.default)
-    })
     if (inBrowser) {
       NProgress.configure({ showSpinner: false })
-      router.onBeforeRouteChange = () => {
-        NProgress.start() // 开始进度条
+      router.onBeforeRouteChange = (to) => {
+        // 百度统计
+        // @ts-ignore: ts(2304)
+        if (typeof _hmt !== 'undefined') {
+          // @ts-ignore: ts(2304)
+          _hmt.push(['_trackPageview', to])
+          // @ts-ignore: ts(2304)
+        } else if (typeof window._hmt !== 'undefined') {
+          // @ts-ignore: ts(2304)
+          window._hmt.push(['_trackPageview', to])
+        }
+        // 开始进度条
+        NProgress.start()
       }
       router.onAfterRouteChanged = () => {
-        busuanzi.fetch() // 不蒜子
         NProgress.done() // 停止进度条
       }
     }

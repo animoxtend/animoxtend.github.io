@@ -8,25 +8,9 @@ layout: home
 
 ## 1. Download Plugin
 
-Go to the shared link and download the latest version of the plugin:
+Go to the Blender Market page of Animoxtend to download our product:
 
-**Google Drive**
-
-> Folder shared via Google Drive: AnimoXtend
->
-> <https://drive.google.com/drive/folders/11VACzZdK5wMdIoBNyJ1bpgmHaP5xvAaM?usp=sharing>
-
-**Baidu NetDisk**
-
-> Files shared via Baidu NetDisk: AnimoXtend
->
-> Link: <https://pan.baidu.com/s/1Arr-3824cQu8gB1m1n9OCQ?pwd=mphv>
->
-> Extraction Code: mphv
-
-Others
-
-> Coming soon to Blender Market, stay tuned!
+[Animoxtend | Blender Market](https://blendermarket.com/products/animoxtend-ai-animotion-generation-toolbox)
 
 ## 2. Apply for API Key
 

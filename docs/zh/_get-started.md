@@ -8,25 +8,9 @@ layout: home
 
 ## 1. 下载插件
 
-进入分享链接，下载插件最新版本：
+进入 Blender Market 商店下载我们的产品:
 
-**百度网盘**
-
-> 通过百度网盘分享的文件：AnimoXtend
->
-> 链接: <https://pan.baidu.com/s/1Arr-3824cQu8gB1m1n9OCQ?pwd=mphv>
->
-> 提取码：mphv
-
-**Google Drive**
-
-> 通过Google Drive分享的文件夹：AnimoXtend
->
-> <https://drive.google.com/drive/folders/11VACzZdK5wMdIoBNyJ1bpgmHaP5xvAaM?usp=sharing>
-
-其他
-
-> 正在上线 Blender Market，敬请期待！
+[Animoxtend | Blender Market](https://blendermarket.com/products/animoxtend-ai-animotion-generation-toolbox)
 
 ## 2. 申请 API Key
 

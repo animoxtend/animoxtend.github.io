@@ -10,7 +10,9 @@ hero:
     - theme: brand
       text: 快速开始
       link: ./zh/_get-started
-      # link: ./zh/插件用户手册%20V1.0.0/
+    - theme: secondary
+      text: English Version
+      link: ./en/
     # - theme: brand
     #   text: Markdown示例
     #   link: /markdown-examples

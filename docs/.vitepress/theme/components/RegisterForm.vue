@@ -5,7 +5,13 @@ import { useLocalStorage } from '@vueuse/core'
 
 import '../styles/bulma-inside.scss'
 
-import { formValue, validatorPromptsI18n, validators, isFormValueValid, refreshPrompts } from './validators'
+import {
+  formValue,
+  validatorPromptsI18n,
+  validators,
+  isFormValueValid,
+  refreshPrompts,
+} from './validators'
 import type { FormValueKey } from './validators'
 
 type Locale = 'zh' | 'en'
@@ -18,6 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const formLocale = computed<Locale>(() => props.locale)
 const submitted = useLocalStorage('register-submitted', false)
+const submittedEmail = useLocalStorage('register-submitted-email', '')
 
 const validatorPrompts = computed(() => {
   if (formLocale.value === 'zh') {
@@ -412,6 +419,7 @@ const handleValidateClick = async () => {
       if (resp.data.code === 200) {
         alert(isZh ? '感谢您的支持' : 'Thank you for your support')
         submitted.value = true
+        submittedEmail.value = formValue.value.email
       } else {
         alert(isZh ? '提交失败' : 'failed')
       }
@@ -425,11 +433,15 @@ const handleValidateClick = async () => {
       <div v-if="submitted" style="margin: 10px 0">
         <p v-if="formLocale === 'zh'">
           感谢您的支持！<br />
-          我们已收到您的申请，将尽快通过邮箱与您联系！
+          我们已收到您的申请，将尽快通过邮箱{{
+            submittedEmail ? `(${submittedEmail})` : ''
+          }}与您联系！
         </p>
         <p v-else>
           Thank you for your support!<br />
-          We have received your application, and will contact you by email as soon as possible!
+          We have received your application, and will contact you by email
+          {{ submittedEmail ? `(${submittedEmail})` : '' }}
+          as soon as possible!
         </p>
       </div>
 

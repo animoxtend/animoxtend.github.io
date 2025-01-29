@@ -1,12 +1,14 @@
 {
     "words": [
         "animoxtend",
+        "busuanzi",
         "keepalive",
         "mathjax",
         "Navs",
         "oxlint",
         "pypinyin",
         "unocss",
-        "vitepress"
+        "vitepress",
+        "zoomable"
     ]
 }

@@ -430,20 +430,24 @@ const handleValidateClick = async () => {
 <template>
   <div>
     <div class="blm-content" style="margin-top: 20px">
-      <div v-if="submitted" style="margin: 10px 0">
+      < v-if="submitted" style="margin: 10px 0">
         <p v-if="formLocale === 'zh'">
           感谢您的支持！<br />
           我们已收到您的申请，将尽快通过邮箱{{
             submittedEmail ? `(${submittedEmail})` : ''
           }}与您联系！
+          <br />
+          (请注意查收邮件，可能会被误判为垃圾邮件)
         </p>
         <p v-else>
           Thank you for your support!<br />
           We have received your application, and will contact you by email
           {{ submittedEmail ? `(${submittedEmail})` : '' }}
           as soon as possible!
+          <br />
+          (Please check your email, it may be misjudged as spam)
         </p>
-      </div>
+      </b>
 
       <!-- FORM -->
       <div class="blm-content" v-if="!submitted">

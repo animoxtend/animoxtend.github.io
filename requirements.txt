@@ -1,5 +1,0 @@
-pypinyin
-python-frontmatter
-typer
-rich
-pydantic

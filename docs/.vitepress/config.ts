@@ -1,5 +1,3 @@
-import { fileURLToPath } from 'node:url'
-
 import { defineConfig } from 'vitepress'
 import mathjax3 from 'markdown-it-mathjax3'
 

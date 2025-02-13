@@ -352,7 +352,7 @@ const onWhereYouHearChange = async (event) => {
   console.debug('??? whereYouHear', event.target.value, event.target.checked)
 }
 const onWhereYouHearOtherChange = async (event) => {
-  formValue.value.whereYouHearOther = event.target.value
+  formValue.value.whereYouHearOther = event.target.value.slice(0, 128)
   await nextTick(() => validators.whereYouHearOther())
   console.debug('??? whereYouHearOther', event.target.value, event.target.checked)
 }
@@ -363,7 +363,7 @@ const onIndustryChange = async (event) => {
   console.debug('??? industry', event.target.value, event.target.checked)
 }
 const onIndustryOtherChange = async (event) => {
-  formValue.value.industryOther = event.target.value
+  formValue.value.industryOther = event.target.value.slice(0, 128)
   await nextTick(() => validators.industryOther())
   console.debug('??? industryOther', event.target.value, event.target.checked)
 }
@@ -376,17 +376,17 @@ const onProfessionChange = async (event) => {
   console.debug('??? profession', event.target.value, event.target.checked)
 }
 const onProfessionOtherChange = async (event) => {
-  formValue.value.professionOther = event.target.value
+  formValue.value.professionOther = event.target.value.slice(0, 128)
   await nextTick(() => validators.professionOther())
   console.debug('??? professionOther', event.target.value, event.target.checked)
 }
 const onNicknameChange = async (event) => {
-  formValue.value.nickname = event.target.value
+  formValue.value.nickname = event.target.value.slice(0, 32) // Limit the length of nickname
   await nextTick(() => validators.nickname())
   console.debug('??? nickname', event.target.value, event.target.checked)
 }
 const onEmailChange = async (event) => {
-  formValue.value.email = event.target.value
+  formValue.value.email = event.target.value.slice(0, 64) // Limit the length of email
   await nextTick(() => validators.email())
   console.debug('??? email', event.target.value, event.target.checked)
 }

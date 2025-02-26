@@ -1,13 +1,11 @@
 import constants from './constants'
 
-const base_url = constants.base_url
-
 export const docsConfig = {
-  title: 'AnimoXtend',
+  title: constants.title,
   description: 'AnimoXtend Documentation',
   lang: 'zh',
   lastUpdated: true, // Enable last updated display
-  base: base_url,
+  base: constants.base_url,
   srcDir: '.',
   /* Router Config */
   cleanUrls: true,

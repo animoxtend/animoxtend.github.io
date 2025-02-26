@@ -5,8 +5,8 @@ import { getNav } from '../nav/en'
 
 // https://vitepress.dev/reference/default-theme-config
 export const themeConfig: DefaultThemeType.Config = {
-  logo: '/icon.png',
-  siteTitle: 'AnimoXtend',
+  logo: `${constants.base_url}/icon.png`,
+  siteTitle: constants.title,
   socialLinks: [{ icon: 'discord', link: constants.socialLinks.discordServer }],
   footer: {
     message: 'Released under the MIT License.',

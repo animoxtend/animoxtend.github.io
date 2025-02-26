@@ -1,5 +1,6 @@
 export default {
   base_url: '/',
+  title: 'AnimoXtend',
   socialLinks: {
     discordServer: 'https://discord.gg/AgWaF6w4RE',
     github: 'https://github.com/animoxtend',

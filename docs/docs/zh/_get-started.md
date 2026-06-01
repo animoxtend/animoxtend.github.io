@@ -4,7 +4,7 @@ layout: home
 
 # 快速开始
 
-> [Animoxtend 简介](https://enormous-voice-30d.notion.site/1-175ec1cf5e3e8026978ef12aa961a190)
+> [Animoxtend 简介](../../zh/插件用户手册%20V1.0.0/1%20-%20简介/)
 
 ## 1. 下载插件
 
@@ -20,10 +20,10 @@ layout: home
 
 ## 3. 安装和使用教程
 
-请参考 [插件用户手册 - 安装指南](https://enormous-voice-30d.notion.site/2-175ec1cf5e3e80969da8ff4fcdf43775)
+请参考 [插件用户手册 - 安装指南](../../zh/插件用户手册%20V1.0.0/2%20-%20安装指南/)
 
 ## 4. 问题反馈
 
 欢迎加入我们的社群，您的反馈和建议都很重要！
 
-[微信/QQ/Discord 社群地址](https://enormous-voice-30d.notion.site/V1-0-0-175ec1cf5e3e809da7a4e42508a6867b)
+[微信/QQ/Discord 社群地址](../../zh/插件用户手册%20V1.0.0/)

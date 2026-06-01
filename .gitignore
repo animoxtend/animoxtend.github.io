@@ -255,3 +255,6 @@ docs/.vitepress/dist/**/*
 components.d.ts
 docs/components.d.ts
 .env
+.pnpm-store
+.claude/skills/gitnexus
+.claude/skills/generated
